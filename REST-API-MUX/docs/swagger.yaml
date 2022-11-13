@@ -1,0 +1,99 @@
+basePath: /
+definitions:
+  models.To_do:
+    properties:
+      description:
+        type: string
+      priority:
+        type: string
+      status:
+        type: string
+      task_name:
+        type: string
+    type: object
+host: localhost:4000
+info:
+  contact:
+    email: balajichandrasekar17@gmail.com
+    name: API Support
+  description: This is task-mgmt api
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: task-mgmt-api
+  version: "1.0"
+paths:
+  /create-task:
+    post:
+      consumes:
+      - application/json
+      description: Create a new task with the input payload
+      parameters:
+      - description: Create task
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/models.To_do'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create a new task
+      tags:
+      - task
+  /get-task:
+    get:
+      consumes:
+      - application/json
+      description: get all task
+      produces:
+      - application/json
+      responses: {}
+      summary: Get_all task
+      tags:
+      - task
+  /update-task:
+    delete:
+      consumes:
+      - application/json
+      description: delete a task with the taskname
+      parameters:
+      - description: task_name
+        in: path
+        name: task_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: delete a task
+      tags:
+      - task
+    put:
+      consumes:
+      - application/json
+      description: update a task status based on task name
+      parameters:
+      - description: task_name
+        in: path
+        name: task_name
+        required: true
+        type: string
+      - description: update task
+        enum:
+        - '"COMPLETED"'
+        - '"PENDING"'
+        in: query
+        name: q
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: update a task status
+      tags:
+      - task
+schemes:
+- http
+swagger: "2.0"
