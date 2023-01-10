@@ -6,12 +6,18 @@ import (
 	"log"
 	"time"
 
+	"go.mongodb.org/mongo-driver/event"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func ConnectDB() *mongo.Client {
-	Client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017/"))
+	cmdMonitor := &event.CommandMonitor{
+		Started: func(_ context.Context, evt *event.CommandStartedEvent) {
+			log.Print(evt.Command)
+		},
+	}
+	Client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017/").SetMonitor(cmdMonitor))
 	if err != nil {
 		log.Fatal(err)
 	}
